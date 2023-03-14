@@ -4,6 +4,7 @@ import { TokenContext } from "../contexts/TokenProvider";
 import { useNavigate } from "react-router-dom";
 
 import Slider from "react-slick";
+import ActivityCard from "../components/ActivityCard";
 
 export default function Activities() {
   const [activities, setActivities] = useState([]);
@@ -49,7 +50,7 @@ export default function Activities() {
   return (
     <>
       <h1>Aktiviteter</h1>
-      <section>
+      <section className="ml-[10vw] mr-[6vw]">
         {isLoading && (
           <article>
             <h2>...loading</h2>
@@ -57,14 +58,9 @@ export default function Activities() {
         )}
         {activities &&
           activities?.map((item, index) => (
-            <article className="h-10 w-12 p-4 m-10" key={index}>
-              <div>
-                <img src={item.asset.url} alt="" />
-              </div>
-              <h2 onClick={() => navigate("/aktivitet/" + item.id)}>
-                {item.name}
-              </h2>
-            </article>
+            <>
+              <ActivityCard item={item} index={index} />
+            </>
           ))}
 
         {error && (
