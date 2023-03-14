@@ -48,7 +48,7 @@ export default function Activities() {
 
   return (
     <>
-      <h1>Home</h1>
+      <h1>Aktiviteter</h1>
       <section>
         {isLoading && (
           <article>
@@ -61,7 +61,7 @@ export default function Activities() {
               <div>
                 <img src={item.asset.url} alt="" />
               </div>
-              <h2 onClick={() => navigate("/classdetails/" + item.id)}>
+              <h2 onClick={() => navigate("/aktivitet/" + item.id)}>
                 {item.name}
               </h2>
             </article>
