@@ -6,13 +6,13 @@ import Navigation from "./Navigation";
 
 export default function Layout() {
   return (
-    <>
-      <main>
+    <div className="h-screen font-primaryFont">
+      <main className="z-1 bg-primaryPurple">
         <Outlet />
       </main>
-      <header>
+      <header className="h-[8%] z-2 fixed bg-white w-full bottom-0">
         <Navigation />
       </header>
-    </>
+    </div>
   );
 }
