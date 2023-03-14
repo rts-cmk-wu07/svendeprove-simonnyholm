@@ -6,10 +6,13 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import TokenProvider from "./contexts/TokenProvider";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
-import ClassDetails from "./pages/ClassDetails";
+import ClassDetails from "./pages/ActivityDetails";
 import "./index.css";
 import Activities from "./pages/Activities";
 import Welcome from "./pages/Welcome";
+import ActivityDetails from "./pages/ActivityDetails";
+import Search from "./pages/Search";
+import Calendar from "./pages/Calendar";
 
 const router = createBrowserRouter([
   {
@@ -25,20 +28,20 @@ const router = createBrowserRouter([
         element: <Activities />,
       },
       {
+        path: "/soeg",
+        element: <Search />,
+      },
+      {
+        path: "/kalender",
+        element: <Calendar />,
+      },
+      {
         path: "/login",
         element: <Login />,
       },
       {
-        path: "/profile",
-        element: (
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "/classdetails/:id",
-        element: <ClassDetails />,
+        path: "/aktivitet/:id",
+        element: <ActivityDetails />,
       },
     ],
   },
