@@ -31,7 +31,7 @@ const ActivityDetails = () => {
   }, [setActivityDetail, setIsLoading, setError, id]);
 
   console.log("classDetail", activityDetail);
-  //console.log("trainerId", classDetail?.trainerId);
+  console.log("trainerId", activityDetail?.instructorId);
 
   return (
     <>
@@ -46,6 +46,9 @@ const ActivityDetails = () => {
         <>
           <section>
             <article>
+              <div>
+                <img src={activityDetail.asset.url} alt="" />
+              </div>
               <h1>{activityDetail.name}</h1>
               <p></p>
             </article>
