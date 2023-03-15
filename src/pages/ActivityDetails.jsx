@@ -54,25 +54,24 @@ const ActivityDetails = () => {
                 alt=""
               />
             </div>
-            {!token ? (
+
+            {token && (
+              <NavLink
+                to="/login"
+                className="flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+              >
+                <p>Tilmeld dig</p>
+              </NavLink>
+            )}
+
+            {!token && (
               <NavLink
                 to="/login"
                 className="flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
               >
                 <p>Log på for tilmelding</p>
               </NavLink>
-            ) : (
-              <button className="absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
-                Log på for tilmelding
-              </button>
             )}
-
-            <NavLink
-              to="/login"
-              className="flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
-            >
-              <p>Log på for tilmelding</p>
-            </NavLink>
 
             <article className="ml-[10vw] mr-[6vw] pt-[8vw] h-[45vh]">
               <h1 className="text-[24px] text-primaryTextColor">
@@ -107,3 +106,14 @@ const ActivityDetails = () => {
 };
 
 export default ActivityDetails;
+
+/*
+
+
+            <NavLink
+              to="/login"
+              className="flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+            >
+              <p>Log på for tilmelding</p>
+            </NavLink>
+*/
