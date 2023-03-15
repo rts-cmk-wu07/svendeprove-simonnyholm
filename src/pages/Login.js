@@ -57,7 +57,9 @@ export default function Login() {
     <>
       <div className="h-[100vh] bg-splashImage bg-no-repeat bg-cover bg-center z-[80] flex justify-center">
         <div>
-          <h1 className="text-[48px] text-primaryTextColor ">Log in</h1>
+          <h1 className="text-[48px] text-primaryTextColor drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+            Log in
+          </h1>
           <form onSubmit={handleSubmit}>
             <label className="">
               Username
