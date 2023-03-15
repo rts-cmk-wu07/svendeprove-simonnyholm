@@ -14,6 +14,9 @@ module.exports = {
         roboto: ["Roboto", "sans-serif"],
         racing: ["Racing Sans One", "sans-serif"],
       },
+      backgroundImage: {
+        splashImage: "url('/src/assets/splash-image.jpg')",
+      },
     },
   },
   plugins: [],
