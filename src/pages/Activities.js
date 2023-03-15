@@ -49,8 +49,15 @@ export default function Activities() {
 
   return (
     <>
-      <h1>Aktiviteter</h1>
-      <section className="ml-[10vw] mr-[6vw]">
+      <div className="fixed top-0 h-11 w-full z-10">
+        <h1 className="pt-8 text-[36px] text-primaryTextColor pl-[10vw] bg-primaryPurple">
+          Aktiviteter
+        </h1>
+
+        <div className="h-[30px] bg-gradient-to-b from-primaryPurple to-transparent"></div>
+      </div>
+
+      <section className="ml-[10vw] mr-[6vw] pt-[120px] pb-24">
         {isLoading && (
           <article>
             <h2>...loading</h2>
