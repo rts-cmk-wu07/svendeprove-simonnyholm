@@ -6,11 +6,12 @@ import Navigation from "./Navigation";
 
 export default function Layout() {
   return (
-    <div className="h-screen font-primaryFont">
+    <div className="font-primaryFont">
       <main className="z-30 bg-primaryPurple">
         <Outlet />
       </main>
-      <header className="h-[8%] z-2 fixed bg-white w-full bottom-0">
+      <div className="h-[20px] w-full fixed bottom-[65px] z-10 bg-gradient-to-b from-transparent to-gray-800"></div>
+      <header className="h-[9%] z-20 fixed bg-primaryTextColor w-full bottom-[0]">
         <Navigation />
       </header>
     </div>
