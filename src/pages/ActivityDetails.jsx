@@ -1,15 +1,16 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import DependentReq from "../components/DependentReq.jsx";
+import { useState, useContext, useEffect } from "react";
+
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import { TokenContext } from "../contexts/TokenProvider";
 
 const ActivityDetails = () => {
   const { id } = useParams();
   const [activityDetail, setActivityDetail] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [renderDependentReq, setRenderDependentReq] = useState(false);
+  const { token } = useContext(TokenContext);
 
   useEffect(() => {
     (async function () {
@@ -26,13 +27,13 @@ const ActivityDetails = () => {
         console.log(error);
       } finally {
         setIsLoading(false);
-        setRenderDependentReq(true);
       }
     })();
   }, [setActivityDetail, setIsLoading, setError, id]);
 
-  console.log("classDetail", activityDetail);
-  console.log("trainerId", activityDetail?.instructorId);
+  console.log("activityDetail", activityDetail);
+  console.log("instructorId", activityDetail?.instructorId);
+  console.log("token in details", token);
 
   return (
     <>
@@ -53,6 +54,18 @@ const ActivityDetails = () => {
                 alt=""
               />
             </div>
+            {!token ? (
+              <NavLink
+                to="/login"
+                className="flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+              >
+                <p>Log på for tilmelding</p>
+              </NavLink>
+            ) : (
+              <button className="absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+                Log på for tilmelding
+              </button>
+            )}
 
             <NavLink
               to="/login"
@@ -94,9 +107,3 @@ const ActivityDetails = () => {
 };
 
 export default ActivityDetails;
-
-/*
-            <button className="absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
-              Log på for tilmelding
-            </button>
-*/
