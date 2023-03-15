@@ -5,6 +5,9 @@ import { setCookie } from "react-use-cookie";
 import Navigation from "./Navigation";
 
 export default function Layout() {
+  const { token, setToken } = useContext(TokenContext);
+  const navigate = useNavigate();
+
   return (
     <div className="font-primaryFont">
       <main className="bg-primaryPurple">
