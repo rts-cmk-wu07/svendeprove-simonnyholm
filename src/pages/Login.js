@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import { TokenContext } from "../contexts/TokenProvider";
 import { useNavigate } from "react-router-dom";
 import useCookie from "react-use-cookie";
+import splashImage from "../assets/splash-image.jpg";
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +56,7 @@ export default function Login() {
 
   return (
     <>
+      <div className="h-[100vh] bg-splashImage bg-no-repeat bg-cover bg-center z-40"></div>
       <h1>Log in</h1>
       <form onSubmit={handleSubmit}>
         <label>
