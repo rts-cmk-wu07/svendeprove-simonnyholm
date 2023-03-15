@@ -7,7 +7,7 @@ import Navigation from "./Navigation";
 export default function Layout() {
   return (
     <div className="font-primaryFont">
-      <main className="z-30 bg-primaryPurple">
+      <main className="bg-primaryPurple">
         <Outlet />
       </main>
       <div className="h-[20px] w-full fixed bottom-[65px] z-10 bg-gradient-to-b from-transparent to-gray-800"></div>

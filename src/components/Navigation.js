@@ -2,6 +2,8 @@ import { NavLink } from "react-router-dom";
 import { FiHome } from "react-icons/fi";
 import { FiSearch } from "react-icons/fi";
 import { FiCalendar } from "react-icons/fi";
+//Feather icons login: FiLogIn
+//Feather icons logout: FiLogOut
 
 const Navigation = () => {
   return (

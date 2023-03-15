@@ -47,7 +47,7 @@ export default function Login() {
   useEffect(
     function () {
       if (token) {
-        navigate("/profile");
+        navigate(-1);
       }
     },
     [token, navigate]
@@ -55,24 +55,28 @@ export default function Login() {
 
   return (
     <>
-      <h1>Log in</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username
-          <input type="text" name="username" />
-        </label>
-        <label>
-          Password
-          <input type="password" name="password" />
-        </label>
-        <label htmlFor="">
-          {" "}
-          Husk login!
-          <input type="checkbox" name="remember" id="" />
-        </label>
-        <button type="submit">Log in</button>
-        {isLoading && <p>Loading...</p>}
-      </form>
+      <div className="h-[100vh] bg-splashImage bg-no-repeat bg-cover bg-center z-[80] flex justify-center">
+        <div>
+          <h1 className="text-[48px] text-primaryTextColor ">Log in</h1>
+          <form onSubmit={handleSubmit}>
+            <label className="">
+              Username
+              <input type="text" name="username" />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" />
+            </label>
+            <label htmlFor="">
+              {" "}
+              Husk login!
+              <input type="checkbox" name="remember" id="" />
+            </label>
+            <button type="submit">Log in</button>
+            {isLoading && <p>Loading...</p>}
+          </form>
+        </div>
+      </div>
     </>
   );
 }
