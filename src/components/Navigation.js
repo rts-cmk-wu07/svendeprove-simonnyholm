@@ -17,7 +17,7 @@ const Navigation = () => {
   const [logoutModal, setLogOutModal] = useState(false);
 
   function handleLogout() {
-    setCookie("trainer-cookie", "", { days: 0 });
+    setCookie("dance-cookie", "", { days: 0 });
     setToken(null);
     setLogOutModal(false);
   }
