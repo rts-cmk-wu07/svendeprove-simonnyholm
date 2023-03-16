@@ -4,6 +4,7 @@ import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { TokenContext } from "../contexts/TokenProvider";
+import { UserDataContext } from "../contexts/UserDataProvider";
 
 const ActivityDetails = () => {
   const { id } = useParams();
@@ -11,6 +12,7 @@ const ActivityDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { token } = useContext(TokenContext);
+  const { userData } = useContext(UserDataContext);
 
   useEffect(() => {
     (async function () {
@@ -34,6 +36,7 @@ const ActivityDetails = () => {
   console.log("activityDetail", activityDetail);
   console.log("instructorId", activityDetail?.instructorId);
   console.log("token in details", token);
+  console.log("userData in details", userData);
 
   async function joinHandler(event) {
     try {
