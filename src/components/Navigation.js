@@ -9,16 +9,20 @@ import { FiLogOut } from "react-icons/fi";
 import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { TokenContext } from "../contexts/TokenProvider";
+import { UserDataContext } from "../contexts/UserDataProvider";
 import { setCookie } from "react-use-cookie";
 
 const Navigation = () => {
   const { token, setToken } = useContext(TokenContext);
+  const { userData, setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
   const [logoutModal, setLogOutModal] = useState(false);
 
   function handleLogout() {
     setCookie("token-cookie", "", { days: 0 });
+    setCookie("user-cookie", "", { days: 0 });
     setToken(null);
+    setUserData(null);
     setLogOutModal(false);
   }
 
