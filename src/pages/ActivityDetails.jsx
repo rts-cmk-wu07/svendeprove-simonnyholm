@@ -5,6 +5,7 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { TokenContext } from "../contexts/TokenProvider";
 import { UserDataContext } from "../contexts/UserDataProvider";
+import JoinBtn from "../components/JoinBtn";
 
 const ActivityDetails = () => {
   const { id } = useParams();
@@ -38,25 +39,6 @@ const ActivityDetails = () => {
   console.log("token in details", token);
   console.log("userData in details", userData);
 
-  async function joinHandler(event) {
-    try {
-      const response = await axios.post(
-        `http://localhost:4000/api/v1/users/${token.userId}/activities/${id}`,
-        undefined,
-        {
-          headers: {
-            authorization: "Bearer " + token.token,
-          },
-        }
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      console.log("joined");
-    }
-  }
-
   return (
     <>
       {isLoading && (
@@ -77,14 +59,7 @@ const ActivityDetails = () => {
               />
             </div>
 
-            {token && (
-              <button
-                onClick={joinHandler}
-                className="flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
-              >
-                Tilmeld dig
-              </button>
-            )}
+            {token && <JoinBtn id={id} detail={activityDetail} />}
 
             {!token && (
               <NavLink

@@ -57,9 +57,16 @@ export default function Login() {
 
   useEffect(
     function () {
-      if (isDone) {
-        navigate(-1);
-        //Velkomstbesked
+      if (consent) {
+        if (isDone) {
+          navigate("/kalender");
+          //Velkomstbesked
+        }
+      } else {
+        if (isDone) {
+          navigate(-1);
+          //Velkomstbesked
+        }
       }
     },
     [token, navigate]
