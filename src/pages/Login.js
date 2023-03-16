@@ -3,10 +3,13 @@ import { useState, useContext, useEffect } from "react";
 import { TokenContext } from "../contexts/TokenProvider";
 import { useNavigate } from "react-router-dom";
 import useCookie from "react-use-cookie";
+import useAxios from "../hooks/useAxios";
+import GetUserData from "../components/GetUserData";
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
-  const [tokenCookie, setTokenCookie] = useCookie("trainer-cookie", undefined);
+  const [tokenCookie, setTokenCookie] = useCookie("dance-cookie", undefined);
+  const [renderRequest, setRenderRequest] = useState(false);
   const { token, setToken } = useContext(TokenContext);
   const navigate = useNavigate();
 
@@ -39,19 +42,24 @@ export default function Login() {
     } catch (error) {
     } finally {
       setIsLoading(false);
+      setRenderRequest(true);
     }
   }
 
   console.log("token", token);
 
+  /*
   useEffect(
     function () {
-      if (token) {
+      if (isLoading === false) {
         navigate(-1);
+        //Velkomstbesked
       }
     },
     [token, navigate]
   );
+
+  */
 
   return (
     <>
@@ -79,6 +87,7 @@ export default function Login() {
           </form>
         </div>
       </div>
+      <div>{renderRequest && <GetUserData />}</div>
     </>
   );
 }
