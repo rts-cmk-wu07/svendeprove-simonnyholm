@@ -17,12 +17,12 @@ const Navigation = () => {
   const [logoutModal, setLogOutModal] = useState(false);
 
   function handleLogout() {
-    setCookie("dance-cookie", "", { days: 0 });
+    setCookie("token-cookie", "", { days: 0 });
     setToken(null);
     setLogOutModal(false);
   }
 
-  console.log("Logoutmodela", logoutModal);
+  console.log("Logoutmodal", logoutModal);
 
   return (
     <>
