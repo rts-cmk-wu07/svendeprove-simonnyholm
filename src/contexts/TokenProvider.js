@@ -1,21 +1,16 @@
-
 import { createContext, useEffect, useState } from "react";
-
-
-
 
 import { getCookie } from "react-use-cookie";
 
 export const TokenContext = createContext(null);
 
 export default function TokenProvider({ children }) {
-
   const [token, setToken] = useState(null);
 
   useEffect(
     function () {
       if (token === null) {
-        const refreshToken = getCookie("trainer-cookie");
+        const refreshToken = getCookie("token-cookie");
         if (refreshToken) {
           setToken(JSON.parse(refreshToken));
         }
@@ -23,7 +18,6 @@ export default function TokenProvider({ children }) {
     },
     [token]
   );
-
 
   return (
     <TokenContext.Provider value={{ token, setToken }}>
