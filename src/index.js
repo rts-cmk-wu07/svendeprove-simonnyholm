@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import TokenProvider from "./contexts/TokenProvider";
+import UserDataProvider from "./contexts/UserDataProvider";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import ClassDetails from "./pages/ActivityDetails";
@@ -51,7 +52,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <TokenProvider>
-      <RouterProvider router={router} />
+      <UserDataProvider>
+        <RouterProvider router={router} />
+      </UserDataProvider>
     </TokenProvider>
   </React.StrictMode>
 );
