@@ -1,13 +1,21 @@
 import axios from "axios";
 import { useState, useContext, useEffect } from "react";
 import { TokenContext } from "../contexts/TokenProvider";
+import { UserDataContext } from "../contexts/UserDataProvider";
 import { useNavigate } from "react-router-dom";
 import useCookie from "react-use-cookie";
+import useAxios from "../hooks/useAxios";
+import GetUserData from "../components/GetUserData";
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
-  const [tokenCookie, setTokenCookie] = useCookie("trainer-cookie", undefined);
+  const [tokenCookie, setTokenCookie] = useCookie("token-cookie", undefined);
+  const [renderRequest, setRenderRequest] = useState(false);
+  const [consent, setConsent] = useState(false);
+  const [isDone, setIsDone] = useState(false);
   const { token, setToken } = useContext(TokenContext);
+  const { userData } = useContext(UserDataContext);
+
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
@@ -22,6 +30,7 @@ export default function Login() {
 
       if (response.status === 200) {
         if (event.target.remember.checked) {
+          setConsent(true);
           const milliseconds = response.data.validUntil - Date.now();
           const validFor = milliseconds / (1000 * 60 * 60 * 24);
           setTokenCookie(JSON.stringify(response.data), {
@@ -38,7 +47,9 @@ export default function Login() {
       }
     } catch (error) {
     } finally {
+      setRenderRequest(true);
       setIsLoading(false);
+      setIsDone(true);
     }
   }
 
@@ -46,8 +57,9 @@ export default function Login() {
 
   useEffect(
     function () {
-      if (token) {
+      if (isDone) {
         navigate(-1);
+        //Velkomstbesked
       }
     },
     [token, navigate]
@@ -79,6 +91,7 @@ export default function Login() {
           </form>
         </div>
       </div>
+      <div>{renderRequest && <GetUserData consent={consent} />}</div>
     </>
   );
 }
