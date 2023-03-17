@@ -1,11 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
-
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { TokenContext } from "../contexts/TokenProvider";
 import { UserDataContext } from "../contexts/UserDataProvider";
-import JoinBtn from "../components/JoinBtn";
+import JoinedOrNot from "../components/JoinedOrNot";
 
 const ActivityDetails = () => {
   const { id } = useParams();
@@ -59,7 +58,7 @@ const ActivityDetails = () => {
               />
             </div>
 
-            {token && <JoinBtn id={id} detail={activityDetail} />}
+            {token && <JoinedOrNot id={id} detail={activityDetail} />}
 
             {!token && (
               <NavLink
