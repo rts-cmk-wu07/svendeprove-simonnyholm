@@ -5,11 +5,13 @@ import { NavLink } from "react-router-dom";
 import { TokenContext } from "../contexts/TokenProvider";
 import { UserDataContext } from "../contexts/UserDataProvider";
 import JoinedOrNot from "../components/JoinedOrNot";
+import Full from "../components/Full";
 
 const ActivityDetails = () => {
   const { id } = useParams();
   const [activityDetail, setActivityDetail] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [activityFull, setActivityFull] = useState(false);
   const [error, setError] = useState(null);
   const { token } = useContext(TokenContext);
   const { userData } = useContext(UserDataContext);
@@ -33,10 +35,23 @@ const ActivityDetails = () => {
     })();
   }, [setActivityDetail, setIsLoading, setError, id]);
 
+  function filterByUserId(item) {
+    if (item.id === userData?.id) {
+      return true;
+    }
+  }
+  const hasJoinedActivity = activityDetail?.users.filter(filterByUserId);
+
   console.log("activityDetail", activityDetail);
   console.log("instructorId", activityDetail?.instructorId);
   console.log("token in details", token);
   console.log("userData in details", userData);
+
+  const usersJoinedArr = activityDetail?.users.length;
+  const maxPart = activityDetail?.maxParticipants;
+
+  console.log("usersJoinedArr", usersJoinedArr);
+  console.log("maxPart", maxPart);
 
   return (
     <>
@@ -58,7 +73,11 @@ const ActivityDetails = () => {
               />
             </div>
 
-            {token && <JoinedOrNot id={id} detail={activityDetail} />}
+            {token && (
+              <>
+                <JoinedOrNot id={id} detail={activityDetail} />
+              </>
+            )}
 
             {!token && (
               <NavLink
@@ -97,19 +116,38 @@ const ActivityDetails = () => {
           </article>
         </section>
       )}
+
+      {usersJoinedArr >= maxPart ? (
+        token ? (
+          hasJoinedActivity.length >= 1 ? (
+            <></>
+          ) : (
+            <>
+              {" "}
+              <div className="flex justify-center absolute top-[20vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+                {activityDetail?.name} er meget populært og er desværre fyldt
+                helt op. Heldigvis har vi mange andre aktiviteter til dig.
+              </div>
+              <NavLink
+                to="/aktiviteter"
+                className="flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+              >
+                Se vores andre aktiviteter
+              </NavLink>
+            </>
+          )
+        ) : (
+          <></>
+        )
+      ) : token ? (
+        <></>
+      ) : (
+        <div className="flex justify-center absolute top-[20vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+          Der er stadig ledige pladser på {activityDetail?.name}!
+        </div>
+      )}
     </>
   );
 };
 
 export default ActivityDetails;
-
-/*
-
-
-            <NavLink
-              to="/login"
-              className="flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
-            >
-              <p>Log på for tilmelding</p>
-            </NavLink>
-*/
