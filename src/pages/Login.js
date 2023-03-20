@@ -6,87 +6,87 @@ import { useNavigate } from "react-router-dom";
 import useCookie from "react-use-cookie";
 import useAxios from "../hooks/useAxios";
 import GetUserData from "../components/GetUserData";
+import { useFormik, validateYupSchema } from "formik";
 
-export default function Login() {
+const validate = (values) => {
+  const errors = {};
+
+  if (!values.username) {
+    errors.username = "Indtast venligst dit brugernavn";
+  }
+
+  if (!values.password) {
+    errors.password = "Indtast venligst din adgangskode";
+  }
+
+  return errors;
+};
+
+export default function BackupLogin() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState([]);
+  const [error, setError] = useState(null);
   const [tokenCookie, setTokenCookie] = useCookie("token-cookie", undefined);
   const [renderRequest, setRenderRequest] = useState(false);
   const [consent, setConsent] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const { token, setToken } = useContext(TokenContext);
   const { userData } = useContext(UserDataContext);
-  const [hasUsername, setHasUsername] = useState(null);
-  const [hasPassword, setHaspassword] = useState(null);
-  const [resp, setResp] = useState(null);
+  const [consentValue, setConsentValue] = useState(false);
+  const [valuepost, setValuepost] = useState(null);
 
   const navigate = useNavigate();
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  function handleConsent(event) {
+    setConsentValue(event.target.checked);
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validate,
+    onSubmit: (values) => {
+      setValuepost(JSON.stringify(values, null, 2));
+      handleSubmit(values);
+    },
+  });
+
+  console.log("consentValue", consentValue);
+
+  async function handleSubmit(values) {
     setIsLoading(true);
 
-    const username = event.target.username.value;
-    const password = event.target.password.value;
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/auth/token",
+        values
+      );
 
-    if (username.length >= 1) {
-      if (password.length >= 1) {
-        try {
-          const response = await axios.post(
-            "http://localhost:4000/auth/token",
-            {
-              username: event.target.username.value,
-              password: event.target.password.value,
-            }
-          );
+      if (response.status === 200) {
+        if (consentValue === true) {
+          setConsent(true);
+          const milliseconds = response.data.validUntil - Date.now();
+          const validFor = milliseconds / (1000 * 60 * 60 * 24);
+          setTokenCookie(JSON.stringify(response.data), {
+            days: validFor,
+            SameSite: "Strict",
+          });
 
-          if (response.status === 401) {
-            setError(error);
-            debugger;
-          }
-
-          if (response.status === 200) {
-            if (event.target.remember.checked) {
-              setConsent(true);
-              const milliseconds = response.data.validUntil - Date.now();
-              const validFor = milliseconds / (1000 * 60 * 60 * 24);
-
-              setTokenCookie(JSON.stringify(response.data), {
-                days: validFor,
-                SameSite: "Strict",
-              });
-
-              console.log("tokenCookie", tokenCookie);
-            }
-
-            setToken(response.data);
-            console.log(token);
-          } else {
-            setRenderRequest(false);
-            return;
-          }
-        } catch (error) {
-          console.error(error);
-          setError(error);
-          return;
-        } finally {
-          setRenderRequest(true);
-          setHasUsername(true);
-          setHaspassword(true);
-          setIsLoading(false);
-          setIsDone(true);
-          if (error) {
-            //Besked!!
-            console.log("Der er FEJL");
-          }
+          console.log("tokenCookie", tokenCookie);
+        } else {
+          //session cookie??
         }
-      } else {
-        setHaspassword(false);
-        console.log("Skriv venligt dit kodeord");
+        setToken(response.data);
+        console.log(token);
       }
-    } else {
-      setHasUsername(false);
-      console.log("Skriv venligt dit brugernavn");
+    } catch (error) {
+      setError(error);
+      setRenderRequest(false);
+    } finally {
+      setRenderRequest(true);
+      setIsLoading(false);
+      setIsDone(true);
     }
   }
 
@@ -109,55 +109,83 @@ export default function Login() {
     [token, navigate]
   );
 
-  console.log("isDOOOONE", isDone);
-  console.log("I wanna see ze error", error.message);
-
   return (
     <>
-      <div className="h-[100vh] bg-splashImage bg-no-repeat bg-cover bg-center z-[80] flex justify-center">
+      <div className="h-[100vh] bg-splashImage bg-no-repeat bg-cover bg-center z-[80]">
         <div>
           <h1 className="text-[48px] text-primaryTextColor drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
             Log in
           </h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={formik.handleSubmit}>
             <label className="">
               Username
-              <input type="text" name="username" />
+              <input
+                type="text"
+                name="username"
+                id="username"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.username}
+              />
             </label>
             <label>
               Password
-              <input type="password" name="password" />
+              <input
+                type="password"
+                name="password"
+                id="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+              />
             </label>
-            <label htmlFor="">
-              {" "}
-              Husk login!
-              <input type="checkbox" name="remember" id="" />
-            </label>
-            <button type="submit">Log in</button>
-            {isLoading && <p>Loading...</p>}
-          </form>
-          <div>{isLoading && <div>Loading response...</div>}</div>
 
+            <button type="submit">Log in</button>
+          </form>
+        </div>
+        <div>
+          <label htmlFor="">
+            {" "}
+            Husk mig til næste gang!
+            <input
+              onChange={handleConsent}
+              type="checkbox"
+              name="remember"
+              id=""
+            />
+          </label>
+        </div>
+        <div>
+          {formik.touched.username && formik.errors.username ? (
+            <div>{formik.errors.username}</div>
+          ) : null}
+          {formik.touched.password && formik.errors.password ? (
+            <div>{formik.errors.password}</div>
+          ) : null}
+        </div>
+        {isLoading && <div>Loading...</div>}
+        {error && (
           <div>
-            {hasUsername === false && (
-              <div>
-                <p>Indtast venligst dit brugernavn</p>
-              </div>
+            <h3>Hovsa!</h3>
+            {error.response.status === 500 && (
+              <p>
+                Der lader til at være problemer med at logge dig på! Tjek
+                venligst om dit brugernavn og di adgangskode er indtastet
+                korrekt!
+              </p>
             )}
-            {hasPassword === false && (
-              <div>
-                <p>Indtast venligst din andgangskode</p>
-              </div>
+            {error.response.status === 401 && (
+              <p>
+                Der lader til at være problemer med at logge dig på! Tjek
+                venligst om dit brugernavn og di adgangskode er indtastet
+                korrekt!
+              </p>
             )}
           </div>
-          <div>{error && <p>{error.message}</p>}</div>
-        </div>
+        )}
       </div>
-      {renderRequest && <GetUserData consent={consent} />}
+
+      <div>{renderRequest === true && <GetUserData consent={consent} />}</div>
     </>
   );
 }
-
-/*
-
-*/
