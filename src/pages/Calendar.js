@@ -7,6 +7,7 @@ import InstructorPage from "../components/InstructorPage";
 import { TokenContext } from "../contexts/TokenProvider";
 import { UserDataContext } from "../contexts/UserDataProvider";
 import { setCookie, getCookie } from "react-use-cookie";
+import { motion } from "framer-motion";
 
 const Calendar = () => {
   const { token, setToken } = useContext(TokenContext);
@@ -56,34 +57,43 @@ const Calendar = () => {
         )}
         {token?.role === "default" && (
           <>
-            <h1>Kalender</h1>
-            <div className="flex">
-              <p>Velkommen {userData?.firstname}! </p>{" "}
-              {storedToken && (
-                <button onClick={(e) => setLogOutModal(true)}>
-                  Log på anden bruger
-                </button>
-              )}
+            <div className="w-full h-[30px]">
+              <h1 className="pt-8 text-[36px] text-primaryTextColor bg-primaryPurple">
+                Kalender
+              </h1>
+              <p className="text-primaryTextColor text-[18px]">
+                Velkommen {userData?.firstname}! Her er din holdplan:
+              </p>
             </div>
 
-            <p>Her er din holdplan:</p>
-            <section>
+            <section className="pt-[100px]">
               {userData?.activities.length >= 1 ? (
                 sortedActivities.map((item, index) => (
                   <article
-                    className="mt-4 p-4 bg-primaryTextColor text-itemTextColor rounded-[11px]"
+                    className="mt-4 pl-4 pr-4 pt-3 pb-3 bg-primaryTextColor text-itemTextColor rounded-[11px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
                     onClick={() => navigate("/aktivitet/" + item.id)}
                     key={index}
+                    role="button"
                   >
-                    <h2>{item.name}</h2>
+                    <h2 className="text-[24px]">{item.name}</h2>
                     <div className="flex justify-between">
-                      <p>{item.weekday}</p>
-                      <p>{item.time}</p>
+                      <p className="text-[18px]">{item.weekday}</p>
+                      <p className="text-[18px]">{item.time}</p>
                     </div>
                   </article>
                 ))
               ) : (
                 <p>Du har ikke tilmeldt dig nogen hold.</p>
+              )}
+              {storedToken && (
+                <div className="w-full fixed flex justify-center bottom-[100px]">
+                  <button
+                    className=" bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[60vw] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+                    onClick={(e) => setLogOutModal(true)}
+                  >
+                    Log på anden bruger
+                  </button>
+                </div>
               )}
             </section>
           </>
@@ -99,7 +109,12 @@ const Calendar = () => {
         )}
       </div>
       {logoutModal && (
-        <div className="absolute top-[20vh] right-[18vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="absolute top-[20vh] right-[18vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+        >
           <p className="flex justify-center">Ønsker du at logge ud?</p>
           <div className="flex justify-between w-[220px] mt-7">
             <button
@@ -115,7 +130,7 @@ const Calendar = () => {
               Nej
             </button>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );

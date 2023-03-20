@@ -22,8 +22,10 @@ Brug indholdet fra opgavebeskrivelsen. (hvad skal denne app kunne).
   Jeg har vælgt at bruge Axios til min web-apps asynkrone http-requests, fordi jeg først og fremmest får en mere overskuelig og læsbar kode. Dette er en fordel over tid og i samarbejde med andre. Desuden er det i custom hooks forholdsvis enkelt at benytte variabler til at ændre på eksempelvis metode, url og headers i et request. Dernæst griber Axios éns respons og genkender datatypen.
 
 - **React-use-cookie** - Hvad er react-use-cookie  
-Jeg vælger at bruge denne pakke til at håndtere cookies, da dokumentationen er meget overskuelig og pakken nem at bruge.
+  Jeg vælger at bruge denne pakke til at håndtere cookies, da dokumentationen er meget overskuelig og pakken nem at bruge.
 
+  - **Framer Motion** - Hvad er Framer Motion  
+    Jeg vælger at bruge denne pakke til at håndtere cookies, da dokumentationen er meget overskuelig og pakken nem at bruge.
 
 ## Perspektivering af mit stack i forhold til andre muligheder (de store ting i vores app)
 
@@ -52,13 +54,51 @@ Eftersom at Landrup Dans har til hensigt et ekspandere deres virksomhed, er det 
 
 (En vil være validateUser i JoinBtn.jsx og den efterfølgende rendering af jsx i JoinBtn.jsx)
 
+Den anden search-logik
+
 Jeg vil vise denne jeiwjf kode
 
 DEnne kode gør dejiuh:
 
 ```javascript
-export default function Profile() {
-  return <h1>Profile</h1>;
+function handleSearch(event) {
+  const searchTermVar = event.target.value.toLowerCase();
+  setSearchTerm(searchTermVar);
+  setPatchStyling("unfill");
+  setHasTyped(true);
+
+  setSearchFeedback("typed");
+
+  const result = allActivities?.filter(
+    (item) =>
+      item.name.toLowerCase().includes(searchTermVar) ||
+      item.description.toLowerCase().includes(searchTermVar) ||
+      item.weekday.toLowerCase().includes(searchTermVar)
+  );
+
+  setSearchResult(result);
+
+  if (result.length < 1) {
+    console.log("under1");
+    setSearchFeedback("<1");
+    setPatchStyling("fill");
+  }
+
+  if (result.length === 1) {
+    setPatchStyling("fill");
+  }
+
+  if (result.length === 2) {
+    setPatchStyling("unfill");
+  }
+
+  if (hasTyped === true) {
+    if (event.target.value === "") {
+      setSearchResult([]);
+      setSearchFeedback("erased");
+      setPatchStyling("fill");
+    }
+  }
 }
 ```
 
@@ -67,22 +107,31 @@ Forklaring afd kode den gør dette og dette for at gøre dettte
 Endnu et kode eksempel (som jeg gerne vil tale om til den mundtloge eksamen):
 
 ```javascript
-useEffect(() => {
-  fetch("http://localhost:4000/api/v1/classes/" + id)
-    .then((response) => {
-      if (!response.ok) {
-        throw Error("Vi kunne desværre ikke indlæse kursusinformationerne");
+function validateUser() {
+  if (hasActivitySameWeekday.length >= 1) {
+    setDayOccupied(true);
+    setUserNotValid(true);
+    return;
+  } else {
+    if (userData.age >= detail.minAge) {
+      if (userData.age > detail.maxAge) {
+        setTooOld(true);
+        setUserNotValid(true);
+        return;
+      } else {
+        if (detail.users.length >= detail.maxParticipants) {
+          setActivityFull(true);
+          setUserNotValid(true);
+          return;
+        } else {
+          joinHandler();
+        }
       }
-      return response.json();
-    })
-    .then((data) => {
-      setIsLoading(false);
-      setClassDetail(data);
-      setError(null);
-    })
-    .catch((err) => {
-      setIsLoading(false);
-      setError(err.message);
-    });
-}, [setClassDetail, setIsLoading, setError, id]);
+    } else {
+      setTooYoung(true);
+      setUserNotValid(true);
+      return;
+    }
+  }
+}
 ```

@@ -11,6 +11,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { TokenContext } from "../contexts/TokenProvider";
 import { UserDataContext } from "../contexts/UserDataProvider";
 import { setCookie, getCookie } from "react-use-cookie";
+import { motion } from "framer-motion";
 
 const Navigation = () => {
   const { token, setToken } = useContext(TokenContext);
@@ -111,7 +112,12 @@ const Navigation = () => {
         </ul>
       </nav>
       {logoutModal && (
-        <div className="absolute bottom-[40vh] right-[18vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="absolute bottom-[40vh] right-[18vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+        >
           <p className="flex justify-center">Ønsker du at logge ud?</p>
           <div className="flex justify-between w-[220px] mt-7">
             <button
@@ -127,7 +133,7 @@ const Navigation = () => {
               Nej
             </button>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );

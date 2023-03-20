@@ -5,6 +5,9 @@ import { NavLink } from "react-router-dom";
 import { TokenContext } from "../contexts/TokenProvider";
 import { UserDataContext } from "../contexts/UserDataProvider";
 import JoinedOrNot from "../components/JoinedOrNot";
+import LoadingAnimation from "../components/package/Loading";
+import BackLink from "../components/Backlink";
+import { motion } from "framer-motion";
 
 const ActivityDetails = () => {
   const { id } = useParams();
@@ -56,13 +59,14 @@ const ActivityDetails = () => {
     <>
       {isLoading && (
         <section>
-          <article>
-            <h1>...Loading</h1>
-          </article>
+          <div className="absolute top-[35vh] flex justify-center w-[80vw] mb-[10px] z-[80]">
+            <LoadingAnimation color={"#EAEAEA"} type={"spinningBubbles"} />
+          </div>
         </section>
       )}
       {activityDetail && (
         <>
+          <BackLink />
           <section>
             <div className="h-[55vh]">
               <img
@@ -123,13 +127,18 @@ const ActivityDetails = () => {
           ) : (
             <>
               {" "}
-              <div className="flex justify-center absolute top-[20vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="opacity-90 flex justify-center absolute top-[20vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+              >
                 {activityDetail?.name} er meget populært og er desværre fyldt
                 helt op. Heldigvis har vi mange andre aktiviteter til dig.
-              </div>
+              </motion.div>
               <NavLink
                 to="/aktiviteter"
-                className="flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+                className="opacity-90 flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
               >
                 Se vores andre aktiviteter
               </NavLink>
@@ -141,9 +150,14 @@ const ActivityDetails = () => {
       ) : token ? (
         <></>
       ) : (
-        <div className="flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2.5 }}
+          className="opacity-90 flex justify-center absolute top-[28vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[15vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+        >
           Der er stadig ledige pladser på {activityDetail?.name}!
-        </div>
+        </motion.div>
       )}
     </>
   );

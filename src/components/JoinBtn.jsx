@@ -5,6 +5,7 @@ import { UserDataContext } from "../contexts/UserDataProvider";
 import QuitBtn from "./QuitBtn";
 import GetUserData from "./GetUserData";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const JoinBtn = ({ id, detail }) => {
   const { token } = useContext(TokenContext);
@@ -33,12 +34,10 @@ const JoinBtn = ({ id, detail }) => {
     if (hasActivitySameWeekday.length >= 1) {
       setDayOccupied(true);
       setUserNotValid(true);
-      //fejlbesked
       return;
     } else {
       if (userData.age >= detail.minAge) {
         if (userData.age > detail.maxAge) {
-          console.log("Du er for gammel til at deltage");
           setTooOld(true);
           setUserNotValid(true);
           return;
@@ -46,8 +45,6 @@ const JoinBtn = ({ id, detail }) => {
           if (detail.users.length >= detail.maxParticipants) {
             setActivityFull(true);
             setUserNotValid(true);
-            console.log("Holdet er desværre fyldt op");
-            //fejlbesked
             return;
           } else {
             joinHandler();
@@ -55,9 +52,7 @@ const JoinBtn = ({ id, detail }) => {
         }
       } else {
         setTooYoung(true);
-        console.log("Du er ikke gammel nok til at deltage");
         setUserNotValid(true);
-        //fejlbesked
         return;
       }
     }
@@ -108,27 +103,47 @@ const JoinBtn = ({ id, detail }) => {
         </button>
       )}
       {dayOccupied && (
-        <div className="flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="opacity-90 flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+        >
           Du har allerede en aktivitet om {detail.weekday}en.
-        </div>
+        </motion.div>
       )}
       {tooOld && (
-        <div className="flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="opacity-90 flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+        >
           Du er desværre for gammel til at deltage i {detail.name}. Heldigvis
           har vi mange andre aktiviteter til dig.
-        </div>
+        </motion.div>
       )}
       {activityFull && (
-        <div className="flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="opacity-90 flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+        >
           {detail.name} er desværre fyldt helt op. Heldigvis har vi mange andre
           aktiviteter til dig.
-        </div>
+        </motion.div>
       )}
       {tooYoung && (
-        <div className="flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="opacity-90 flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+        >
           Du er desværre for ung til at deltage i {detail.name}. Heldigvis har
           vi mange andre aktiviteter til dig.
-        </div>
+        </motion.div>
       )}
       {renderRequest && <GetUserData />}
     </>

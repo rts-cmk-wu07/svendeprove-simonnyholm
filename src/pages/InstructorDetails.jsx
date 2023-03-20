@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import LoadingAnimation from "../components/package/Loading";
 
 const InstructorDetails = () => {
   const { id } = useParams();
@@ -30,17 +31,28 @@ const InstructorDetails = () => {
   console.log("instructorDetail", instructorDetail);
 
   return (
-    <>
-      <h1>{instructorDetail?.name}</h1>
-      <section>
+    <div className="ml-[10vw] mr-[10vw] h-[100vh]">
+      {isLoading && (
+        <div className="absolute top-[35vh] flex justify-center w-[80vw] mb-[10px] z-[80]">
+          <LoadingAnimation color={"#EAEAEA"} type={"spinningBubbles"} />
+        </div>
+      )}
+
+      <div className="w-full h-[15px]">
+        <h1 className="pt-8 mb-4 text-[24px] w-full text-primaryTextColor bg-primaryPurple">
+          {instructorDetail?.name}
+        </h1>
+      </div>
+
+      <section className="pt-[70px]">
         {instructorDetail &&
           instructorDetail.users.map((item, index) => (
-            <p>
+            <p className="text-primaryTextColor text-[18px] pt-2">
               {item.firstname} {item.lastname}
             </p>
           ))}
       </section>
-    </>
+    </div>
   );
 };
 

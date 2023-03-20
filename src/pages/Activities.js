@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { TokenContext } from "../contexts/TokenProvider";
 import { useNavigate } from "react-router-dom";
+import LoadingAnimation from "../components/package/Loading";
 
 import ActivityCard from "../components/ActivityCard";
 
@@ -46,9 +47,9 @@ export default function Activities() {
 
       <section className="ml-[10vw] mr-[6vw] pt-[120px] pb-24">
         {isLoading && (
-          <article>
-            <h2>...loading</h2>
-          </article>
+          <div className="absolute top-[35vh] flex justify-center w-[80vw] mb-[10px] z-[80]">
+            <LoadingAnimation color={"#EAEAEA"} type={"spinningBubbles"} />
+          </div>
         )}
         {activities &&
           activities?.map((item, index) => (

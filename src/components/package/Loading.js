@@ -2,11 +2,11 @@ import ReactLoading from "react-loading";
 
 const LoadingAnimation = ({ type, color }) => (
   <ReactLoading
-    type={"cubes"}
-    color={"#ff5666"}
+    type={"spinningBubbles"}
+    color={"#5E2E53"}
     height={200}
     width={200}
-    delay={500}
+    delay={200}
   />
 );
 

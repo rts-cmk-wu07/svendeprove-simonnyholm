@@ -4,6 +4,7 @@ import axios from "axios";
 import GetUserData from "./GetUserData";
 import { TokenContext } from "../contexts/TokenProvider";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const QuitBtn = ({ id, detail }) => {
   const { token } = useContext(TokenContext);
@@ -39,13 +40,18 @@ const QuitBtn = ({ id, detail }) => {
     <>
       {hasQuit ? (
         <>
-          <div className="flex justify-center absolute top-[20vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="flex justify-center absolute top-[20vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+          >
             Du har forladt {detail.name}. Det er vi kede af. Du er velkommen til
             at se, om vi har andre ting, der kunne være noget for dig.
-          </div>
+          </motion.div>
           <NavLink
             to="/aktiviteter"
-            className="flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+            className=" flex justify-center absolute top-[45vh] right-[10vw] bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
           >
             Se vores andre aktiviteter
           </NavLink>
@@ -67,7 +73,12 @@ const QuitBtn = ({ id, detail }) => {
       )}
 
       {quitModal && (
-        <div className="absolute top-[20vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="absolute top-[20vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+        >
           <p className="flex justify-center">
             Ønsker du virkelig at stoppe til {detail.name}?
           </p>
@@ -85,7 +96,7 @@ const QuitBtn = ({ id, detail }) => {
               Nej
             </button>
           </div>
-        </div>
+        </motion.div>
       )}
       {renderRequest && <GetUserData />}
     </>

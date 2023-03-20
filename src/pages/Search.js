@@ -57,9 +57,6 @@ const Search = () => {
         item.description.toLowerCase().includes(searchTermVar) ||
         item.weekday.toLowerCase().includes(searchTermVar)
     );
-    console.log("result", result);
-    console.log("Sterm", searchTermVar);
-    console.log("Sresult", searchResult);
 
     setSearchResult(result);
 
@@ -85,14 +82,8 @@ const Search = () => {
         setPatchStyling("fill");
       }
     }
-
-    console.log("searchResult", searchResult);
-    console.log("result", result);
   }
-  console.log("sFeedback", searchFeedback);
-  console.log("hastyped", hasTyped);
-  console.log("searchTerm", searchTerm);
-  console.log("PATCHED", patchStyling);
+
 
   return (
     <div
