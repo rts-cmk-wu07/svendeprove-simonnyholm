@@ -3,9 +3,9 @@
 _Svendeprøve for Simon Nyholm Sørensen,  
 Marts 2023_
 
-## Denne app
+## Landrup Dans
 
-Brug indholdet fra opgavebeskrivelsen. (hvad skal denne app kunne).
+Formålet med denne applikation er som beskrevet i opgavebeskrivelsen at bane vejen for, at Landrup Dans kan få flere tilmeldinger til deres aktiviteter, så de kan få mulighed for at få deres virksomhed til at ekspanndere. Da det synes at være det umiddelbare formål med app'en at få flere tilmeldinger, har jeg valgt at fokusere på at gøre det lettest muligt for brugeren at konvertere og gøre brugerrejsen så smidig som muligt, også selvom alt måske ikke går som tiltænkt set fra brugerperspektivet.
 
 ## Tech-stack
 
@@ -27,38 +27,43 @@ Brug indholdet fra opgavebeskrivelsen. (hvad skal denne app kunne).
   - **Framer Motion** - Hvad er Framer Motion  
     Jeg vælger at bruge denne pakke til at håndtere cookies, da dokumentationen er meget overskuelig og pakken nem at bruge.
 
-## Perspektivering af mit stack i forhold til andre muligheder (de store ting i vores app)
-
-saml m angular:
-man sidder med typescript: mindre tilgængeligt og mere rigidt
-i angular er alle valg truffet
-angular kan være svært at opdatere - er i modsætning til react ikke bagud kompatobel
-
-## Skalerbarhed
-
-Hvad har gjort dig af tanker om din applikations skalerbarhed?
-veldokumenteret
-codesplitteing i componenter
-
-ift deploy: skaberbare tjenester (netlyfy, render.com)
-cloud-flare
-
-Eftersom at Landrup Dans har til hensigt et ekspandere deres virksomhed, er det relevant at have for øje, hvordan den øsnkede applikation kan bygges, så den bliver skalerbar. Man kunne eksempelvis opstille følgende scenarier:
-
-1. Flere tilmeldte
-2. Flere hold
-3. Flere fysiske afdelinger
-4. Mulighed for at fremhæve instruktøren
-
 ## Kode-eksempler
 
-(En vil være validateUser i JoinBtn.jsx og den efterfølgende rendering af jsx i JoinBtn.jsx)
+Mit første kode-eksempel kommer JoinBtn.jsx-komponentet.
 
-Den anden search-logik
+Denne kode har til opgave at validere, om brugeren skal gives mulighed for at deltage i en givet aktivitet ud fra de kriterier, som er opstillet i kravsspecifikationen. Ved hjælp if- og else-statements valideres en for en alle krav ved at brugerens data sammenlignes med dem. Kan der ikke gives mulighed for deltagelse, sættes en setter-funktion til f.eks. at være true, således at en fejlbesked kan renderes til brugeren. Som man forhåbentlig kan se ud af produktet, er det i disse situationer tanken, at brugeren ikke smides på porten, så man mister en mulog konvertering, men at brugeren i stedet ledes videre til andre tilbud, som bedre kunne matche med vedkommende.
 
-Jeg vil vise denne jeiwjf kode
+```javascript
+function validateUser() {
+  if (hasActivitySameWeekday.length >= 1) {
+    setDayOccupied(true);
+    setUserNotValid(true);
+    return;
+  } else {
+    if (userData.age >= detail.minAge) {
+      if (userData.age > detail.maxAge) {
+        setTooOld(true);
+        setUserNotValid(true);
+        return;
+      } else {
+        if (detail.users.length >= detail.maxParticipants) {
+          setActivityFull(true);
+          setUserNotValid(true);
+          return;
+        } else {
+          joinHandler();
+        }
+      }
+    } else {
+      setTooYoung(true);
+      setUserNotValid(true);
+      return;
+    }
+  }
+}
+```
 
-DEnne kode gør dejiuh:
+Mit andet kode-eksempel er funktionen handleSearch fra Search.jsx-komponentet:
 
 ```javascript
 function handleSearch(event) {
@@ -105,33 +110,3 @@ function handleSearch(event) {
 Forklaring afd kode den gør dette og dette for at gøre dettte
 
 Endnu et kode eksempel (som jeg gerne vil tale om til den mundtloge eksamen):
-
-```javascript
-function validateUser() {
-  if (hasActivitySameWeekday.length >= 1) {
-    setDayOccupied(true);
-    setUserNotValid(true);
-    return;
-  } else {
-    if (userData.age >= detail.minAge) {
-      if (userData.age > detail.maxAge) {
-        setTooOld(true);
-        setUserNotValid(true);
-        return;
-      } else {
-        if (detail.users.length >= detail.maxParticipants) {
-          setActivityFull(true);
-          setUserNotValid(true);
-          return;
-        } else {
-          joinHandler();
-        }
-      }
-    } else {
-      setTooYoung(true);
-      setUserNotValid(true);
-      return;
-    }
-  }
-}
-```
