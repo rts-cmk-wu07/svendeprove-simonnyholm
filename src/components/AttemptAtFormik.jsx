@@ -18,7 +18,7 @@ export default function BackupLogin() {
 
   const navigate = useNavigate();
 
-  async function AttemptAtFormik(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
 

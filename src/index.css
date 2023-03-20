@@ -6,6 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.shadowed {
+  filter: drop-shadow(0 0 10vw white);
+}
+
 .first {
   color: transparent;
   font-size: 40px;
