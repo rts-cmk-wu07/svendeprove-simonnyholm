@@ -106,7 +106,3 @@ function handleSearch(event) {
   }
 }
 ```
-
-Forklaring afd kode den gør dette og dette for at gøre dettte
-
-Endnu et kode eksempel (som jeg gerne vil tale om til den mundtloge eksamen):
