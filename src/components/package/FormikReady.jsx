@@ -4,14 +4,12 @@ import { useState } from "react";
 const validate = (values) => {
   const errors = {};
 
-  if (!values.userName) {
-    errors.userName = "Required";
+  if (!values.username) {
+    errors.username = "Required";
   }
 
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
+  if (!values.password) {
+    errors.password = "Required";
   }
 
   return errors;
@@ -22,13 +20,14 @@ const FormikForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      userName: "",
-      email: "",
+      username: "",
+      password: "",
     },
     validate,
     onSubmit: (values) => {
       setValuepost(JSON.stringify(values, null, 2));
-      //alert(JSON.stringify(values, null, 2));
+      //setStateForCheckbox
+      //handleSubmit()
     },
   });
 
@@ -45,23 +44,23 @@ const FormikForm = () => {
           type="text"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.userName}
+          value={formik.values.username}
         />
-        {formik.touched.userName && formik.errors.userName ? (
-          <div>{formik.errors.userName}</div>
+        {formik.touched.username && formik.errors.username ? (
+          <div>{formik.errors.username}</div>
         ) : null}
 
-        <label htmlFor="email">Email Address</label>
+        <label htmlFor="">Email Address</label>
         <input
-          id="email"
-          name="email"
-          type="email"
+          id="password"
+          name="password"
+          type="password"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.email}
+          value={formik.values.password}
         />
-        {formik.touched.email && formik.errors.email ? (
-          <div>{formik.errors.email}</div>
+        {formik.touched.password && formik.errors.password ? (
+          <div>{formik.errors.password}</div>
         ) : null}
 
         <button type="submit">Submit</button>
@@ -71,3 +70,5 @@ const FormikForm = () => {
 };
 
 export default FormikForm;
+
+// email
