@@ -12,19 +12,19 @@ const GetUserData = ({ consent }) => {
   const [error, setError] = useState(null);
   const [userCookie, setUserCookie] = useCookie("user-cookie", undefined);
 
-  console.log("tokenUserId", token.userId);
-  console.log("tokenToken", token.token);
+  console.log("tokenUserId", token?.userId);
+  console.log("tokenToken", token?.token);
 
   useEffect(() => {
     (async function () {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/v1/users/${token.userId}`,
+          `http://localhost:4000/api/v1/users/${token?.userId}`,
           {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              authorization: "Bearer " + token.token,
+              authorization: "Bearer " + token?.token,
             },
           }
         );
@@ -50,8 +50,6 @@ const GetUserData = ({ consent }) => {
       }
     })();
   }, [consent, token]);
-
-  console.log("userData", userData);
 
   return <></>;
 };

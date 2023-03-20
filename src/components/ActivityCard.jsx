@@ -9,6 +9,7 @@ const ActivityCard = ({ index, item }) => {
       className="h-[80vw] w-[80vw] relative mb-10 rounded-tl-[39px]
       rounded-tr-[39px] rounded-bl-[39px]"
       key={index}
+      role="button"
     >
       <img
         className="h-[80vw] w-[80vw] object-cover rounded-tl-[39px] rounded-tr-[39px] rounded-bl-[39px]"

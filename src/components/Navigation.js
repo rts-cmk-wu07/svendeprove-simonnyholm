@@ -10,20 +10,47 @@ import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { TokenContext } from "../contexts/TokenProvider";
 import { UserDataContext } from "../contexts/UserDataProvider";
-import { setCookie } from "react-use-cookie";
+import { setCookie, getCookie } from "react-use-cookie";
 
 const Navigation = () => {
   const { token, setToken } = useContext(TokenContext);
   const { userData, setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
   const [logoutModal, setLogOutModal] = useState(false);
+  const [loggedInUsingCookie, setLoggedInUsingCookie] = useState(false);
+
+  console.log("token in nav", token);
+
+  const storedToken = getCookie("token-cookie");
+
+  console.log("STOREDTOKEN", storedToken);
+
+  function loginUsingCookie() {
+    if (storedToken) {
+      setToken(JSON.parse(storedToken));
+      setLoggedInUsingCookie(true);
+
+      //Besked om at bruger er logget ind
+      console.log("Login using cookie");
+      navigate("/kalender");
+    }
+  }
+
+  console.log("loggedInUsingCookie", loggedInUsingCookie);
 
   function handleLogout() {
-    setCookie("token-cookie", "", { days: 0 });
-    setCookie("user-cookie", "", { days: 0 });
     setToken(null);
     setUserData(null);
     setLogOutModal(false);
+  }
+
+  function handleLogoutStoredToken() {
+    setToken(null);
+    setUserData(null);
+    setLogOutModal(false);
+    setCookie("token-cookie", "", { days: 0 });
+    setCookie("user-cookie", "", { days: 0 });
+    navigate("/aktiviteter");
   }
 
   console.log("Logoutmodal", logoutModal);
@@ -65,6 +92,13 @@ const Navigation = () => {
               >
                 <FiLogOut size={30} />
               </button>
+            ) : storedToken ? (
+              <button
+                className="text-itemTextColor pt-[6px] pl-[8px]"
+                onClick={loginUsingCookie}
+              >
+                <FiLogIn size={30} />
+              </button>
             ) : (
               <NavLink
                 className="text-itemTextColor flex justify-center pt-[6px]"
@@ -77,11 +111,21 @@ const Navigation = () => {
         </ul>
       </nav>
       {logoutModal && (
-        <div className="absolute w-10 h-5 bottom-[100px] left-8">
-          <p>Ønsker du at logge ud?</p>
-          <div>
-            <button onClick={handleLogout}>Ja</button>
-            <button onClick={(e) => setLogOutModal(false)}>Nej</button>
+        <div className="absolute bottom-[40vh] right-[18vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+          <p className="flex justify-center">Ønsker du at logge ud?</p>
+          <div className="flex justify-between w-[220px] mt-7">
+            <button
+              className="flex justify-center bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[100px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+              onClick={storedToken ? handleLogoutStoredToken : handleLogout}
+            >
+              Ja
+            </button>
+            <button
+              className="flex justify-center bg-primaryPurple text-primaryTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[100px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]"
+              onClick={(e) => setLogOutModal(false)}
+            >
+              Nej
+            </button>
           </div>
         </div>
       )}

@@ -6,14 +6,13 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import TokenProvider from "./contexts/TokenProvider";
 import UserDataProvider from "./contexts/UserDataProvider";
 import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import ClassDetails from "./pages/ActivityDetails";
 import "./index.css";
 import Activities from "./pages/Activities";
 import Welcome from "./pages/Welcome";
 import ActivityDetails from "./pages/ActivityDetails";
 import Search from "./pages/Search";
 import Calendar from "./pages/Calendar";
+import InstructorDetails from "./pages/InstructorDetails";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +42,14 @@ const router = createBrowserRouter([
       {
         path: "/aktivitet/:id",
         element: <ActivityDetails />,
+      },
+      {
+        path: "/holdliste/:id",
+        element: (
+          <ProtectedRoute>
+            <InstructorDetails />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

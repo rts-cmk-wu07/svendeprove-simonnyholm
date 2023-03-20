@@ -1,24 +1,15 @@
 import { useState } from "react";
+import ActivityCard from "./ActivityCard";
 
 const FilterNResults = ({ arr }) => {
-  // const arrayA = [
-  //   { title: "Eggs", desc: "They are good" },
-  //   { title: "Milk", desc: "It is white" },
-  // ];
-  // const arrayB = [
-  //   { title: "Cucumbers", desc: "They are long" },
-  //   { title: "Carrots", desc: "They are orange" },
-  // ];
-
   const [searchTerm, setSearchTerm] = useState(null);
   const [searchResult, setSearchResult] = useState(null);
 
   function handleSearch(event) {
-    //try to replace state var with regular variable
     const searchTermVar = event.target.value;
     setSearchTerm(searchTermVar);
 
-    const result = arr.filter(
+    const result = arr?.filter(
       (item) =>
         item.className.includes(searchTermVar) ||
         item.classDescription.includes(searchTermVar)
@@ -31,19 +22,24 @@ const FilterNResults = ({ arr }) => {
     if (searchTerm === null) {
       setSearchResult(null);
     }
+
+    console.log("searchResult", searchResult);
   }
 
   return (
-    <div>
+    <>
       <input onChange={handleSearch} type="text" />
       {searchResult &&
         searchResult?.map((item, index) => (
-          <article key={index}>
-            <h2>{item.className}</h2>
-            <p>{item.classDescription}</p>
-          </article>
+          <ActivityCard item={item} index={index} />
         ))}
-    </div>
+      {searchResult === null && (
+        <p>
+          Der blev ikke fundet nogen aktiviteter. Prøv at søge efter noget
+          andet!
+        </p>
+      )}
+    </>
   );
 };
 
@@ -66,7 +62,7 @@ exampleComponent(){
 
     return(
 
-    <Filter arr={data} />
+    <FilterNResults arr={data} />
 
     )
 }

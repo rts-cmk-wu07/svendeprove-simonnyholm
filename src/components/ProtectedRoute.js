@@ -5,7 +5,7 @@ import { TokenContext } from "../contexts/TokenProvider";
 export default function ProtectedRoute({ children }) {
   const { token } = useContext(TokenContext);
 
-  return token ? children : <Navigate to="/login" />;
+  return token?.role === "instructor" ? children : <Navigate to="/kalender" />;
 }
 
 //denne context må være til users med instructor permissions

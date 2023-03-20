@@ -7,7 +7,7 @@ const JoinedOrNot = ({ id, detail }) => {
   const { userData } = useContext(UserDataContext);
 
   function filterByUserId(item) {
-    if (item.id === userData.id) {
+    if (item.id === userData?.id) {
       return true;
     }
   }

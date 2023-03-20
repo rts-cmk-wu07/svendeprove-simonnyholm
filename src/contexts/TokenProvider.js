@@ -7,6 +7,8 @@ export const TokenContext = createContext(null);
 export default function TokenProvider({ children }) {
   const [token, setToken] = useState(null);
 
+  /*
+
   useEffect(
     function () {
       if (token === null) {
@@ -18,6 +20,7 @@ export default function TokenProvider({ children }) {
     },
     [token]
   );
+  */
 
   return (
     <TokenContext.Provider value={{ token, setToken }}>

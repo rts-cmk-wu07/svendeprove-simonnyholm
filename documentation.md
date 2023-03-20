@@ -17,9 +17,13 @@ Brug indholdet fra opgavebeskrivelsen. (hvad skal denne app kunne).
 
   Jeg vælger at style min applikation ved hjælp af Tailwind.css, fordi først og fremmest man under udviklingen hurtigt får et indtryk af, hvordan de enkelte elementer i web-app'en kommer til at fremstå, og på den måde kan kan hurtigt rette sin styling, indtil man opnår det ønskede resultat. Dernæst er der sammenlignet med almindelig css generelt en fordel ved dels at slippe for at navigere rundt mellem klassenavne i stylig-filer og andre filer, og dels en fordel ved at der er mulighed for at benytte en relativt standardiseret styling. Dette giver overblik, en mere forenklet arbejdsproces og i sidste ende en tidsbesparelse.
 
-- **Axios** - Axios er en pakke, som forenkler arbejdet med asynkrone http-requests, og som griber fortolker de promises, som man forventer at modtage som respons til CRUD-requests.
+- **Axios** - Axios er en pakke, som forenkler arbejdet med asynkrone http-requests, og som griber og fortolker de promises, som man forventer at modtage som respons til CRUD-requests.
 
   Jeg har vælgt at bruge Axios til min web-apps asynkrone http-requests, fordi jeg først og fremmest får en mere overskuelig og læsbar kode. Dette er en fordel over tid og i samarbejde med andre. Desuden er det i custom hooks forholdsvis enkelt at benytte variabler til at ændre på eksempelvis metode, url og headers i et request. Dernæst griber Axios éns respons og genkender datatypen.
+
+- **React-use-cookie** - Hvad er react-use-cookie  
+Jeg vælger at bruge denne pakke til at håndtere cookies, da dokumentationen er meget overskuelig og pakken nem at bruge.
+
 
 ## Perspektivering af mit stack i forhold til andre muligheder (de store ting i vores app)
 
@@ -37,7 +41,16 @@ codesplitteing i componenter
 ift deploy: skaberbare tjenester (netlyfy, render.com)
 cloud-flare
 
+Eftersom at Landrup Dans har til hensigt et ekspandere deres virksomhed, er det relevant at have for øje, hvordan den øsnkede applikation kan bygges, så den bliver skalerbar. Man kunne eksempelvis opstille følgende scenarier:
+
+1. Flere tilmeldte
+2. Flere hold
+3. Flere fysiske afdelinger
+4. Mulighed for at fremhæve instruktøren
+
 ## Kode-eksempler
+
+(En vil være validateUser i JoinBtn.jsx og den efterfølgende rendering af jsx i JoinBtn.jsx)
 
 Jeg vil vise denne jeiwjf kode
 

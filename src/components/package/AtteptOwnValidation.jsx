@@ -7,7 +7,7 @@ import useCookie from "react-use-cookie";
 import useAxios from "../hooks/useAxios";
 import GetUserData from "../components/GetUserData";
 
-export default function Login() {
+export default function BackupLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState([]);
   const [tokenCookie, setTokenCookie] = useCookie("token-cookie", undefined);
@@ -40,10 +40,8 @@ export default function Login() {
             }
           );
 
-          if (response.status === 401) {
-            setError(error);
-            debugger;
-          }
+          setResp(response.data.message);
+          console.log("resp", resp);
 
           if (response.status === 200) {
             if (event.target.remember.checked) {
@@ -66,7 +64,6 @@ export default function Login() {
             return;
           }
         } catch (error) {
-          console.error(error);
           setError(error);
           return;
         } finally {
@@ -75,10 +72,6 @@ export default function Login() {
           setHaspassword(true);
           setIsLoading(false);
           setIsDone(true);
-          if (error) {
-            //Besked!!
-            console.log("Der er FEJL");
-          }
         }
       } else {
         setHaspassword(false);
@@ -109,9 +102,6 @@ export default function Login() {
     [token, navigate]
   );
 
-  console.log("isDOOOONE", isDone);
-  console.log("I wanna see ze error", error.message);
-
   return (
     <>
       <div className="h-[100vh] bg-splashImage bg-no-repeat bg-cover bg-center z-[80] flex justify-center">
@@ -136,9 +126,14 @@ export default function Login() {
             <button type="submit">Log in</button>
             {isLoading && <p>Loading...</p>}
           </form>
-          <div>{isLoading && <div>Loading response...</div>}</div>
-
           <div>
+            {isLoading && <div>Loading response...</div>}
+            {error && (
+              <div>
+                <p>{error}</p>
+              </div>
+            )}
+
             {hasUsername === false && (
               <div>
                 <p>Indtast venligst dit brugernavn</p>
@@ -150,14 +145,9 @@ export default function Login() {
               </div>
             )}
           </div>
-          <div>{error && <p>{error.message}</p>}</div>
         </div>
       </div>
-      {renderRequest && <GetUserData consent={consent} />}
+      <div>{renderRequest && <GetUserData consent={consent} />}</div>
     </>
   );
 }
-
-/*
-
-*/

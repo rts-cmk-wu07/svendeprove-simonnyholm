@@ -29,7 +29,7 @@ const JoinBtn = ({ id, detail }) => {
 
   console.log("hasWeekday", hasActivitySameWeekday);
 
-  function validateUser(event) {
+  function validateUser() {
     if (hasActivitySameWeekday.length >= 1) {
       setDayOccupied(true);
       setUserNotValid(true);
@@ -88,8 +88,6 @@ const JoinBtn = ({ id, detail }) => {
     }
   }
 
-  // {hasJoined ? (row.isGrouped ? "GroupedRow" : "") : "SelectedRow"}
-
   return (
     <>
       {hasJoined ? (
@@ -110,20 +108,26 @@ const JoinBtn = ({ id, detail }) => {
         </button>
       )}
       {dayOccupied && (
-        <div className="flex justify-center absolute top-[40vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[54px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <div className="flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
           Du har allerede en aktivitet om {detail.weekday}en.
         </div>
       )}
       {tooOld && (
-        <div className="flex justify-center absolute top-[20vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <div className="flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
           Du er desværre for gammel til at deltage i {detail.name}. Heldigvis
           har vi mange andre aktiviteter til dig.
         </div>
       )}
       {activityFull && (
-        <div className="flex justify-center absolute top-[20vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[190px] rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+        <div className="flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
           {detail.name} er desværre fyldt helt op. Heldigvis har vi mange andre
           aktiviteter til dig.
+        </div>
+      )}
+      {tooYoung && (
+        <div className="flex justify-center absolute top-[18vh] right-[10vw] bg-secondaryPurple text-itemTextColor text-[18px] pr-4 pl-4 pt-3 pb-3 w-[249px] h-[23vh] overflow-hidden rounded-[10px] drop-shadow-[0_6px_5px_rgba(0,0,0,0.25)]">
+          Du er desværre for ung til at deltage i {detail.name}. Heldigvis har
+          vi mange andre aktiviteter til dig.
         </div>
       )}
       {renderRequest && <GetUserData />}

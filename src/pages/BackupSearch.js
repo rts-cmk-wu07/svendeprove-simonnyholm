@@ -34,7 +34,6 @@ const Search = () => {
           setIsLoading(false);
           setIsDone(true);
           setSearchFeedback("untyped");
-          setPatchStyling("fill");
         }
       })();
     },
@@ -46,10 +45,13 @@ const Search = () => {
   function handleSearch(event) {
     const searchTermVar = event.target.value.toLowerCase();
     setSearchTerm(searchTermVar);
-    setPatchStyling("unfill");
+
     setHasTyped(true);
 
     setSearchFeedback("typed");
+    if (searchFeedback === "typed") {
+      setHasTyped(true);
+    }
 
     const result = allActivities?.filter(
       (item) =>
@@ -66,23 +68,30 @@ const Search = () => {
     if (result.length < 1) {
       console.log("under1");
       setSearchFeedback("<1");
-      setPatchStyling("fill");
+      //setSearchResult(false);
     }
 
     if (result.length === 1) {
-      setPatchStyling("fill");
+      setPatchStyling("1");
     }
 
     if (result.length === 2) {
-      setPatchStyling("unfill");
+      setPatchStyling("2");
     }
 
+    /*
+    if (searchTerm === null) {
+      setSearchResult(null);
+    }
+
+    if (searchFeedback === "typed") {
+    }
+    */
     if (hasTyped === true) {
       if (event.target.value === "") {
         console.log("TOM");
         setSearchResult([]);
         setSearchFeedback("erased");
-        setPatchStyling("fill");
       }
     }
 
@@ -95,13 +104,7 @@ const Search = () => {
   console.log("PATCHED", patchStyling);
 
   return (
-    <div
-      className={
-        patchStyling === "unfill"
-          ? "h-full bg-primaryPurple"
-          : "h-[100vh] bg-primaryPurple"
-      }
-    >
+    <div className="h-full bg-primaryPurple">
       <section className="pl-[10vw] mr-[6vw] pt-[10px] h-full bg-primaryPurple">
         {isLoading && <div>Loading...</div>}
         {allActivities && (
@@ -120,7 +123,7 @@ const Search = () => {
               <div className="h-[62px] bg-gradient-to-b from-primaryPurple to-transparent"></div>
             </div>
 
-            <section className="pt-[190px] h-full pb-[100px] bg-primaryPurple">
+            <section className="pt-[165px] h-full pb-[100px] bg-primaryPurple">
               {searchResult &&
                 searchResult?.map((item, index) => (
                   <ActivityCard item={item} index={index} />
@@ -133,6 +136,7 @@ const Search = () => {
                   <p className="text-primaryTextColor text-[18px] pt-2">
                     Find dit nye hold blandt vores mange aktiviteter.
                   </p>
+                  <div className="w-full h-[60vh] bg-primaryPurple"></div>
                 </div>
               )}
               {searchFeedback === "<1" && (
@@ -148,6 +152,7 @@ const Search = () => {
                     Tip: Du kan for eksempel prøve at søge efter en dansestil,
                     en teknik eller hvilken ugedag, du er interesseret i!
                   </p>
+                  <div className="w-full h-[43vh] bg-primaryPurple"></div>
                 </div>
               )}
               {searchFeedback === "erased" && (
@@ -159,16 +164,19 @@ const Search = () => {
                     Tip: Du kan for eksempel prøve at søge efter en dansestil,
                     en teknik eller hvilken ugedag, du er interesseret i!
                   </p>
+                  <div className="w-full h-[50vh] bg-primaryPurple"></div>
                 </div>
               )}
             </section>
           </>
         )}
-
+        {patchStyling === "1" && (
+          <div className="w-full h-[22vh] bg-primaryPurple"></div>
+        )}
         {error && <p>{error}</p>}
       </section>
     </div>
   );
 };
 
-export default Search;
+export default BackupSearch;
